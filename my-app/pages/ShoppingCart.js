@@ -8,17 +8,26 @@ export default function ShoppingCart(props) {
       ? JSON.parse(localStorage.getItem("cart")) || []
       : [];
   const setCart = useContext(SetCartNumContext);
+  const total = cartData.reduce((acc, item) => acc + item.price, 0);
   setCart(cartData.length);
+
   return (
-    <div>
-      <h2>Shopping Cart</h2>
-      <ul>
+    <div className="mt-10 p-10 flex flex-col gap-4 content-evenly">
+      <h2 className="font-semibold text-4xl">Shopping Cart</h2>
+      <ul className="text-xl font-semibold">
         {cartData.map((item) => (
           <li key={item.id}>
-            {item.title} - ${item.price}
+            {item.title} -{" "}
+            <span className="w-fit text-xl text-white font-semibold bg-amber-500">
+              ${item.price}
+            </span>
           </li>
         ))}
       </ul>
+      <hr />
+      <p className="w-fit text-xl text-white font-semibold bg-orange-600">
+        Total: ${total.toFixed(2)}
+      </p>
     </div>
   );
 }
